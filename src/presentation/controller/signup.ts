@@ -1,6 +1,7 @@
 import type { HttpRequest, HttpResponse } from '../../presentation/protocols/http'
 import { MissingParamError } from '../errors/missing-params.error'
 import { badRequest, successRequest } from '../helpers/http-helper'
+import { type Controller } from '../protocols/controller'
 
 interface ISignUpRequestBody {
   name: string
@@ -20,7 +21,7 @@ function isSignUpRequestBody (body: unknown): body is ISignUpRequestBody {
   return false
 }
 
-export class SignUpController {
+export class SignUpController implements Controller {
   handle (httpRequest: HttpRequest): HttpResponse {
     const { body } = httpRequest
     const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
