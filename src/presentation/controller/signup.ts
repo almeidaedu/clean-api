@@ -23,19 +23,16 @@ function isSignUpRequestBody (body: unknown): body is ISignUpRequestBody {
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
     const { body } = httpRequest
+    const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
 
     if (!isSignUpRequestBody(body)) {
       return badRequest(new Error('Invalid request body'))
     }
 
-    const { name, email } = body
-
-    if (!name) {
-      return badRequest(new MissingParamError('name'))
-    }
-
-    if (!email) {
-      return badRequest(new MissingParamError('email'))
+    for (const field of requiredFields) {
+      if (!body[field]) {
+        return badRequest(new MissingParamError(field))
+      }
     }
 
     return successRequest({
