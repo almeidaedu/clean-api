@@ -1,5 +1,6 @@
 import type { HttpRequest, HttpResponse } from '../../presentation/protocols/http'
 import { MissingParamError } from '../errors/missing-params.error'
+import { badRequest, successRequest } from '../helpers/http-helper'
 
 interface ISignUpRequestBody {
   name: string
@@ -24,34 +25,24 @@ export class SignUpController {
     const { body } = httpRequest
 
     if (!isSignUpRequestBody(body)) {
-      return {
-        statusCode: 400,
-        body: new Error('Invalid request body')
-      }
+      return badRequest(new Error('Invalid request body'))
     }
 
     const { name, email } = body
 
     if (!name) {
-      return {
-        statusCode: 400,
-        body: new MissingParamError('name')
-      }
+      return badRequest(new MissingParamError('name'))
     }
 
     if (!email) {
-      return {
-        statusCode: 400,
-        body: new MissingParamError('email')
-      }
+      return badRequest(new MissingParamError('email'))
     }
 
-    return {
+    return successRequest({
       statusCode: 200,
       body: {
-        name,
-        email
+        message: 'User created successfully'
       }
-    }
+    })
   }
 }
