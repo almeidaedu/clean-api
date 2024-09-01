@@ -1,8 +1,6 @@
-import type { HttpRequest, HttpResponse } from '../../presentation/protocols/http'
+import type { Controller, EmailValidator, HttpRequest, HttpResponse } from '../protocols'
 import { InvalidParamError, MissingParamError } from '../errors'
 import { badRequest, successRequest, serverError } from '../helpers/http-helper'
-import type { Controller } from '../protocols/controller'
-import type { EmailValidator } from '../protocols/email-validator'
 
 interface ISignUpRequestBody {
   name: string
