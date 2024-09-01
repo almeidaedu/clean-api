@@ -1,6 +1,6 @@
 export interface HttpResponse {
   statusCode: number
-  body: unknown
+  body: any
 }
 
 export interface HttpRequest {
