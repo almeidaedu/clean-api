@@ -61,7 +61,11 @@ export class SignUpController implements Controller {
 
       return successRequest(account)
     } catch (error) {
-      return serverError()
+      if (error instanceof Error) {
+        return serverError(error)
+      } else {
+        return serverError(new Error('Unknown error'))
+      }
     }
   }
 }
