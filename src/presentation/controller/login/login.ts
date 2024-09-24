@@ -39,7 +39,11 @@ export class LoginController implements Controller {
 
     const { email } = httpRequest.body
 
-    this.emailValidator.isValid(email)
+    const isValid = this.emailValidator.isValid(email)
+
+    if (!isValid) {
+      return badRequest(new InvalidParamError('email'))
+    }
 
     return await new Promise(resolve => { resolve({ statusCode: 200, body: {} }) })
   }
