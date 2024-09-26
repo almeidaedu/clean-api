@@ -2,6 +2,7 @@ import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
 import type { Controller, HttpRequest, HttpResponse } from '../../protocols'
 import type { EmailValidator } from '../../protocols/email-validator'
+import type { Authentication } from '../../../domain/usecases/authentication'
 
 interface LoginRequestBody {
   email: string
@@ -19,9 +20,11 @@ function isLoginRequestBody (body: unknown): body is LoginRequestBody {
 
 export class LoginController implements Controller {
   private readonly emailValidator: EmailValidator
+  private readonly authentication: Authentication
 
-  constructor (emailValidator: EmailValidator) {
+  constructor (emailValidator: EmailValidator, authentication: Authentication) {
     this.emailValidator = emailValidator
+    this.authentication = authentication
   }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -38,13 +41,15 @@ export class LoginController implements Controller {
         }
       }
 
-      const { email } = httpRequest.body
+      const { email, password } = httpRequest.body
 
       const isValid = this.emailValidator.isValid(email)
 
       if (!isValid) {
         return badRequest(new InvalidParamError('email'))
       }
+
+      await this.authentication.auth(email, password)
 
       return await new Promise(resolve => { resolve({ statusCode: 200, body: {} }) })
     } catch (error) {
