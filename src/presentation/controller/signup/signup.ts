@@ -1,6 +1,6 @@
 import type { Controller, HttpRequest, HttpResponse, AddAccount, Validation } from './signup-protocols'
 import { InvalidParamError } from '../../errors'
-import { badRequest, serverError, successRequest } from '../../helpers/http-helper'
+import { badRequest, serverError, successRequest } from '../../helpers/http/http-helper'
 
 interface ISignUpRequestBody {
   name: string

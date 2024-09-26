@@ -1,6 +1,6 @@
-import type { AccountModel } from '../controller/signup/signup-protocols'
-import { ServerError, UnauthorizedError } from '../errors'
-import type { HttpResponse } from '../protocols/http'
+import type { AccountModel } from '../../controller/signup/signup-protocols'
+import { ServerError, UnauthorizedError } from '../../errors'
+import type { HttpResponse } from '../../protocols/http'
 
 interface AuthResponse {
   accessToken: string

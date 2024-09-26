@@ -1,5 +1,5 @@
 import { InvalidParamError } from '../../errors'
-import { badRequest, serverError, successRequest, unauthorized } from '../../helpers/http-helper'
+import { badRequest, serverError, successRequest, unauthorized } from '../../helpers/http/http-helper'
 import type { Controller, HttpRequest, HttpResponse, Authentication, Validation } from './login-protocols'
 
 interface LoginRequestBody {
