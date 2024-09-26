@@ -1,8 +1,6 @@
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, serverError, unauthorized } from '../../helpers/http-helper'
-import type { Controller, HttpRequest, HttpResponse } from '../../protocols'
-import type { EmailValidator } from '../../protocols/email-validator'
-import type { Authentication } from '../../../domain/usecases/authentication'
+import type { Controller, HttpRequest, HttpResponse, EmailValidator, Authentication } from './login-protocols'
 
 interface LoginRequestBody {
   email: string
